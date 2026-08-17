@@ -32,8 +32,10 @@ export default function About() {
     <div className="flex flex-col">
 
       {/* ── En-tête de page ───────────────────────────────────────────── */}
-      <section className="py-20 px-4 bg-gradient-to-b from-gray-900 to-gray-950 border-b border-white/5">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="relative py-20 px-4 border-b border-white/5 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/img/team.png')" }} />
+        <div className="absolute inset-0 bg-gray-950/75" />
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
           <div className="text-yellow-400 text-sm font-semibold uppercase tracking-widest mb-3">Notre histoire</div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">À propos</h1>
           <p className="text-white/50 leading-relaxed">
