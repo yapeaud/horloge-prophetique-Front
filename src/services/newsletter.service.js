@@ -7,5 +7,9 @@ export const subscribeNewsletter = (data) =>
 // Liste les abonnés (admin — token injecté automatiquement).
 export const getSubscribers = () => api.get('/newsletter/subscribers').then((r) => r.data)
 
+// Télécharge le CSV des abonnés (token envoyé en header par Axios).
+export const exportSubscribersCSV = () =>
+  api.get('/newsletter/export', { responseType: 'blob' }).then((r) => r.data)
+
 // Désabonne un abonné par son UUID public.
 export const unsubscribe = (id) => api.delete(`/newsletter/unsubscribe/${id}`)

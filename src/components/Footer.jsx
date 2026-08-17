@@ -4,14 +4,16 @@ import { Clock, Share2, Camera, Play, Send, Phone, Mail, MapPin } from 'lucide-r
 import { subscribeNewsletter } from '../services/newsletter.service.js'
 
 export const Footer = () => {
-  const [email, setEmail] = useState('')
+  const [prenom, setPrenom] = useState('')
+  const [email, setEmail]   = useState('')
   const [status, setStatus] = useState(null) // 'ok' | 'error' | null
 
   const handleSubscribe = async (e) => {
     e.preventDefault()
     try {
-      await subscribeNewsletter({ prenom: '', email })
+      await subscribeNewsletter({ prenom, email })
       setStatus('ok')
+      setPrenom('')
       setEmail('')
     } catch {
       setStatus('error')
@@ -39,15 +41,19 @@ export const Footer = () => {
           <ul className="flex flex-col gap-3 text-sm text-white/50">
             <li className="flex items-center gap-2">
               <Phone size={14} className="text-yellow-400 flex-shrink-0" />
-              +1 (000) 000-0000
+              <a href="tel:+12265825918" className="hover:text-yellow-400 transition-colors">+1(226) 582-5918</a>
             </li>
             <li className="flex items-center gap-2">
               <Mail size={14} className="text-yellow-400 flex-shrink-0" />
-              contact@horlogeprophetique.com
+              <a href="mailto:horlogeprophetique@gmail.com" className="hover:text-yellow-400 transition-colors">
+                horlogeprophetique@gmail.com
+              </a>
             </li>
             <li className="flex items-start gap-2">
               <MapPin size={14} className="text-yellow-400 flex-shrink-0 mt-0.5" />
-              Montréal, Canada
+              <a href="https://www.google.com/maps/place/Montr%C3%A9al,+QC+H2Y+2A8,+Canada" target="_blank" rel="noreferrer" className="hover:text-yellow-400 transition-colors">
+                Montréal, Canada
+              </a>
             </li>
           </ul>
         </div>
@@ -95,6 +101,14 @@ export const Footer = () => {
             <p className="text-green-400 text-sm">Vous êtes inscrit(e) !</p>
           ) : (
             <form onSubmit={handleSubscribe} className="flex flex-col gap-2">
+              <input
+                type="text"
+                value={prenom}
+                onChange={(e) => setPrenom(e.target.value)}
+                placeholder="Votre prénom"
+                required
+                className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm placeholder-white/30 focus:outline-none focus:border-yellow-500/50"
+              />
               <input
                 type="email"
                 value={email}

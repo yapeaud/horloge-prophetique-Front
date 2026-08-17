@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Trash2, Download } from 'lucide-react'
-import { getSubscribers, unsubscribe } from '../../services/newsletter.service.js'
+import { getSubscribers, unsubscribe, exportSubscribersCSV } from '../../services/newsletter.service.js'
 import { Button } from '../../components/ui/Button.jsx'
 import { Spinner } from '../../components/ui/Spinner.jsx'
 
@@ -17,11 +17,14 @@ export default function AdminNewsletter() {
     load()
   }
 
-  // L'export CSV passe le token JWT en query param car window.open()
-  // ne peut pas définir de headers HTTP (contrainte navigateur).
-  const handleExport = () => {
-    const token = localStorage.getItem('token')
-    window.open(`${import.meta.env.VITE_API_URL}/newsletter/export?token=${token}`, '_blank')
+  const handleExport = async () => {
+    const blob = await exportSubscribersCSV()
+    const url  = URL.createObjectURL(blob)
+    const a    = document.createElement('a')
+    a.href     = url
+    a.download = `abonnes-newsletter-${new Date().toISOString().slice(0, 10)}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
   }
 
   return (
